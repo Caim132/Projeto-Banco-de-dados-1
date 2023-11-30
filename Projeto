@@ -1,0 +1,43 @@
+CREATE TABLE Produtos (
+    produto_id INT NOT NULL PRIMARY KEY,
+    nome VARCHAR(100),
+    descricao TEXT,
+    codigo_produto VARCHAR(50),
+    preco DECIMAL(10, 2),
+    quantidade_estoque INT
+);
+
+CREATE TABLE Fornecedores (
+    fornecedor_id INT NOT NULL PRIMARY KEY,
+    nome VARCHAR(100),
+    contato VARCHAR(100),
+    email VARCHAR(100)
+);
+
+CREATE TABLE Estoque (
+    estoque_id INT NOT NULL PRIMARY KEY,
+    produto_id INT,
+    localizacao VARCHAR(100),
+    quantidade INT,
+    FOREIGN KEY (produto_id) REFERENCES Produtos(produto_id)
+);
+
+CREATE TABLE Pedidos (
+    pedido_id INT NOT NULL PRIMARY KEY,
+    produto_id INT,
+    fornecedor_id INT,
+    data_pedido DATE,
+    quantidade INT,
+    status VARCHAR(50),
+    FOREIGN KEY (produto_id) REFERENCES Produtos(produto_id),
+    FOREIGN KEY (fornecedor_id) REFERENCES Fornecedores(fornecedor_id)
+);
+
+CREATE TABLE MovimentacaoInventario (
+    movimento_id INT NOT NULL PRIMARY KEY,
+    produto_id INT,
+    quantidade_movimentada INT,
+    tipo_movimento VARCHAR(50),
+    data_movimento DATETIME,
+    FOREIGN KEY (produto_id) REFERENCES Produtos(produto_id)
+);
